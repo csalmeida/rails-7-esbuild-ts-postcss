@@ -1,0 +1,8 @@
+/* Entry point for your PostCSS build */
+
+@import "components/home";
+
+body {
+  background: cornflowerblue;
+  color: pink;
+}

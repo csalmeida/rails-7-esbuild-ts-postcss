@@ -1,0 +1,3 @@
+web: bin/rails server -p 2077
+js: yarn watch:ts
+css: yarn build:css --watch
