@@ -12,14 +12,15 @@
     "@hotwired/turbo-rails": "^7.1.0"
   },
   "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
     "autoprefixer": "^10.4.1",
     "esbuild": "^0.14.10",
     "postcss": "^8.4.5",
     "postcss-cli": "^9.1.0",
-    "postcss-nesting": "^10.1.1",
     "postcss-import": "^14.0.2",
-    "typescript": "^4.5.4",
+    "postcss-nesting": "^10.1.1",
+    "tailwindcss": "^3.0.12",
     "tsc-watch": "^4.6.0",
-    "@tsconfig/recommended": "^1.0.1"
+    "typescript": "^4.5.4"
   }
 }

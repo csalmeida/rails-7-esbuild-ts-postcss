@@ -1,8 +1,3 @@
 /* Entry point for your PostCSS build */
-
+@import "tailwind";
 @import "components/home";
-
-body {
-  background: cornflowerblue;
-  color: pink;
-}
