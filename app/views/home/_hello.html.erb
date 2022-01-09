@@ -1,12 +1,22 @@
-<div data-controller="hello">
-  <input data-hello-target="name" type="text">
+<div
+  class="p-5"
+  data-controller="hello">
+  <div>
+    <label for="email" class="block text-sm font-medium text-gray-700" data-hello-target="output">Type your name</label>
+    <div class="flex mt-1">
+      <input
+        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+        data-hello-target="name"
+        name="name" id="name"
+        type="text" >
 
-  <button 
-    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-    data-action="click->hello#greet">
-    Greet
-  </button>
+      <button 
+        class="ml-5 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        data-action="click->hello#greet">
+        Greet
+      </button>
+    </div>
+  </div>
 
-  <span data-hello-target="output">
-  </span>
+
 </div>
