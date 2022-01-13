@@ -1,0 +1,68 @@
+services:
+  rails:
+    # Building a custom image described in a docker file.
+    build:
+      # Setting a context and dockerfile paths allows for Dockerfiles to be stored away in a sub-directory.
+      context: . # Context of build, this is where the project files are stored.
+      dockerfile: ./docker/ruby.dockerfile # The path to Dockerfile and name of the dockerfile to be built
+    # Setting an image name avoids the same image being built multiple times.
+    image: csalmeida/rails-app:latest
+    # Specified the name of the container, commented out to avoid name conflicts when running multiple instances of the image.
+    # container_name: protonmail_themes
+    ports:
+      - 3000:3000
+    depends_on:
+      - "database"
+    restart: on-failure:5
+    volumes:
+      # Allows changes made to project directory to be accessed by the container via a bind mount.
+      - ${PWD}:/app
+  database:
+    image: postgres:14.1-alpine3.15@sha256:884c142deb4a141f67489c807534ec6139f13b9a6432d2f87a4de283aaec0b5c
+    container_name: rails-postgres
+    # PHP mysqli connector does not support caching_sha2_password plugin so using mysql_native_password instead.
+    command: "--default-authentication-plugin=mysql_native_password"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    restart: on-failure:5
+    # This allows for the database to be consulted via a software such as SQL Workbench or TablePlus
+    ports:
+      - 5432:5432
+    volumes:
+      - /var/lib/postgresql/data
+    # Used to compile styles and scripts.
+  yarn-js-bundling:
+    # Building a custom image described in a docker file.
+    build:
+      # Setting a context and dockerfile paths allows for Dockerfiles to be stored away in a sub-directory.
+      context: . # Context of build, this is where the project files are stored.
+      dockerfile: ./docker/node.dockerfile # The path to Dockerfile and name of the dockerfile to be built
+    # Setting an image name avoids the same image being built multiple times.
+    image: csalmeida/rails-node-tooling:latest
+    command: yarn watch:ts
+    depends_on:
+      - "rails"
+    restart: on-failure:5
+    volumes:
+      # Allows changes made to project directory to be accessed by the container via a bind mount.
+      - ${PWD}:/app
+      # Adds a volume to store node dependencies.
+      - /app/node_modules
+  yarn-css-bundling:
+    # Building a custom image described in a docker file.
+    build:
+      # Setting a context and dockerfile paths allows for Dockerfiles to be stored away in a sub-directory.
+      context: . # Context of build, this is where the project files are stored.
+      dockerfile: ./docker/node.dockerfile # The path to Dockerfile and name of the dockerfile to be built
+    # Setting an image name avoids the same image being built multiple times.
+    image: csalmeida/rails-node-tooling:latest
+    command: yarn build:css --watch
+    depends_on:
+      - "rails"
+    restart: on-failure:5
+    volumes:
+      # Allows changes made to project directory to be accessed by the container via a bind mount.
+      - ${PWD}:/app
+      # Adds a volume to store node dependencies.
+      - /app/node_modules
